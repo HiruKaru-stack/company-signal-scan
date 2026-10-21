@@ -2,6 +2,8 @@
 
 A Claude Code skill that checks whether a company is showing active growth/buying signals right now — hiring, funding, leadership changes, expansion, tech adoption, or press coverage — using Exa MCP search.
 
+Built by [Hiruni Jayasinghe](https://www.linkedin.com/in/hiruni-jayasinghe-b47600251).
+
 Works in two modes:
 - **Single-company**: give a website + LinkedIn URL, get a signal report in chat.
 - **Batch**: give a CSV of companies, get a `-signals.csv` output with per-company verdicts and proof links.
