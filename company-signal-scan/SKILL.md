@@ -118,14 +118,14 @@ Every YES line must carry a real, clickable URL — that's the proof-link rule a
 
 ## Batch mode (CSV input)
 
-Same rules as single-company mode (recency, identity-match), just looped over rows. Follows the same sample-first-then-scale pattern as `/icp-prompt-builder` in this toolkit — don't skip the sample step even if the user seems in a hurry, since Exa search noise (name collisions, stale posts) is exactly the kind of thing that's cheap to catch on 5 rows and expensive to catch on 500.
+Same rules as single-company mode (recency, identity-match), just looped over rows. Always sample first, then scale — don't skip the sample step even if the user seems in a hurry, since Exa search noise (name collisions, stale posts) is exactly the kind of thing that's cheap to catch on 5 rows and expensive to catch on 500.
 
 ### 1. Confirm the signal set before running anything
 
-Exa MCP calls are free on this setup — no per-call spend to manage. The reason to still confirm scope up front is time and rate limits, not cost: checking all 6 categories means roughly 6× the Exa calls of checking 1, and hundreds of calls back-to-back can hit rate limiting or just take a long time to finish. Before running the file:
+Confirm scope up front to keep runtime, rate limits and any Exa usage costs under control: checking all 6 categories means roughly 6× the Exa calls of checking 1, and hundreds of calls back-to-back can hit rate limiting or just take a long time to finish. Before running the file:
 - If the user named specific signals ("just check hiring and funding"), use only those.
 - If they didn't say, ask which categories to check — don't silently default to all 6 on a large file.
-- For a large file (hundreds of rows), mention the rough scale (e.g. "200 rows × 3 categories is ~600-1000 calls, this will take a while and may need to run in waves") so the user knows what to expect — not as a cost warning, just a time-and-pacing one.
+- For a large file (hundreds of rows), mention the rough scale (e.g. "200 rows × 3 categories is ~600-1000 calls, this will take a while and may need to run in waves") so the user knows what to expect.
 
 ### 2. Sample first (5 rows)
 
@@ -137,7 +137,7 @@ Present the 5 results as a table (one column per requested signal). Ask the user
 
 ### 4. Scale in waves
 
-Once approved, continue in waves of 10-20 rows, one Task sub-agent per company, run in parallel within a wave. Don't run more than ~20 companies at once — matches the batch discipline used elsewhere in this toolkit.
+Once approved, continue in waves of 10-20 rows, one Task sub-agent per company, run in parallel within a wave. Don't run more than ~20 companies at once.
 
 ### 5. Write the output CSV
 
@@ -154,7 +154,7 @@ Each signal category gets two columns: the verdict cell (`NO`, `UNKNOWN — {rea
 
 - **Row missing a LinkedIn URL:** look it up via `web_search_exa` first, same as single-company mode — but if no confident match is found, mark it `UNKNOWN — no LinkedIn match found` rather than guessing.
 - **Domain unreachable / site down:** mark all requested signals `UNKNOWN — site unreachable`, not `NO`. `NO` means "checked, found nothing"; unreachable means the check couldn't run.
-- **Duplicate domains in the CSV:** dedupe before running — no reason to pay for the same company twice.
+- **Duplicate domains in the CSV:** dedupe before running — no reason to check the same company twice.
 
 ## Notes
 
