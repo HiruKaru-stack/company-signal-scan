@@ -1,6 +1,6 @@
 # Company Signal Scan
 
-A Claude Code agent that tells you whether a B2B company is showing buying signals **right now**, and backs every finding with a link you can check.
+A Claude Code agent that tells you whether a B2B company is showing buying signals **right now**, and backs every signal it reports with a link you can check.
 
 Built by [Hiruni Jayasinghe](https://www.linkedin.com/in/hiruni-jayasinghe-b47600251).
 
@@ -17,7 +17,7 @@ This agent does that research for me before a campaign. It only counts recent, v
 | Hiring | Open roles on the careers page or ATS board (Greenhouse, Lever, Ashby, Workable) |
 | Funding | New rounds, amount, stage and investors |
 | Leadership change | New CEO, CMO, VP Sales, Head of Growth and similar hires |
-| Expansion | New offices, markets or regions |
+| Expansion | New offices or new markets |
 | Tech / tool adoption | New partnerships or tools the company says it uses |
 | Press / product launch | Announcements and launches |
 
@@ -40,7 +40,7 @@ flowchart LR
 Three rules keep the results trustworthy:
 
 - **Recent only.** A signal counts only if it was published in the last 3 months. A live careers page always counts, because it shows what is open today.
-- **Right company.** Short or common names often match unrelated companies. Every result is checked against the company's domain, team or location before it counts.
+- **Right company.** Short or common names often match unrelated companies. A result only counts if it matches the company's website, a known founder or executive, or both its location and industry.
 - **Proof or it doesn't count.** Every YES comes with a link to the source. If there is no link, the result is reported as UNKNOWN, never guessed.
 
 ## Example
